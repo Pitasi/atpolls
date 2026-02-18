@@ -1,0 +1,39 @@
+{
+  "lexicon": 1,
+  "id": "pt.anto.polls.poll",
+  "defs": {
+    "main": {
+      "type": "record",
+      "key": "tid",
+      "record": {
+        "type": "object",
+        "required": [
+          "question",
+          "options",
+          "createdAt"
+        ],
+        "properties": {
+          "question": {
+            "type": "string",
+            "maxLength": 300,
+            "maxGraphemes": 150
+          },
+          "options": {
+            "type": "array",
+            "minLength": 2,
+            "maxLength": 10,
+            "items": {
+              "type": "string",
+              "maxLength": 100,
+              "maxGraphemes": 50
+            }
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "datetime"
+          }
+        }
+      }
+    }
+  }
+}
