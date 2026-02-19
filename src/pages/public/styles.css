@@ -1,19 +1,3 @@
-body {
-  font-family: Arial, Helvetica, sans-serif;
-
-  --border-color: #ddd;
-  --gray-100: #fafafa;
-  --gray-500: #666;
-  --gray-700: #333;
-  --primary-100: #d2e7ff;
-  --primary-200: #b1d3fa;
-  --primary-400: #2e8fff;
-  --primary-500: #0078ff;
-  --primary-600: #0066db;
-  --error-500: #f00;
-  --error-100: #fee;
-}
-
 /*
   Josh's Custom CSS Reset
   https://www.joshwcomeau.com/css/custom-css-reset/
@@ -59,83 +43,291 @@ h6 {
   overflow-wrap: break-word;
 }
 
-#root,
-#__next {
-  isolation: isolate;
+/* ── Variables ── */
+:root {
+  --blue: #0000EE;
+  --blue-hover: #0000CC;
+  --blue-light: #EEF0FF;
+  --blue-bar: #C8CDFF;
+  --blue-bar-selected: #9BA3FF;
+  --gray-50: #FAFAFA;
+  --gray-200: #E5E5E5;
+  --gray-400: #999;
+  --gray-600: #555;
+  --gray-900: #111;
+  --radius: 6px;
 }
 
-/*
-  Custom style
-*/
+/* ── Base ── */
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  color: var(--gray-900);
+  background: #fff;
+  font-size: 15px;
+}
+
+a {
+  color: var(--blue);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* ── Layout ── */
 #root {
   width: 100%;
-  max-width: 500px;
+  max-width: 480px;
   margin: 0 auto;
+  padding: 48px 20px 64px;
 }
 
-.header {
-  padding: 1em 0;
+/* ── Header ── */
+#header {
+  margin-bottom: 32px;
 }
 
-.container {
-  margin-top: 2em;
+#header h1 {
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
 }
 
-.card {
-  padding: 1em 2em;
-  background: rgba(0, 0, 0, 0.01);
-  border-radius: 3em;
+#header p {
+  color: var(--gray-400);
+  font-size: 14px;
+  margin-top: 2px;
 }
 
-.new-poll-form {
-  width: 100%;
-  margin-top: 2em;
+/* ── Session bar ── */
+.session-form {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 14px;
+  color: var(--gray-600);
+  padding: 12px 0;
+  border-bottom: 1px solid var(--gray-200);
+  margin-bottom: 24px;
 }
 
-.new-poll-form input {
-  width: 100%;
+.session-form strong {
+  color: var(--gray-900);
+  font-weight: 600;
 }
 
-.poll h1 {
-  margin: 2em 0;
-}
-
-.poll button {
-  display: block;
-  position: relative;
-  width: 100%;
-  background: rgba(0, 0, 0, 0.03);
+.session-form button {
+  background: none;
   border: none;
-  padding: .7em 0;
-  border-radius: 2em;
-  overflow: hidden;
-  transition: all ease-in-out .13s;
+  color: var(--gray-400);
   cursor: pointer;
-  margin-bottom: 0.5em;
+  font-size: 13px;
+  padding: 0;
 }
 
-.poll button:hover {
-  background: rgba(0, 0, 0, 0.07)
+.session-form button:hover {
+  color: var(--gray-900);
 }
 
-.poll .vote-bar {
+/* ── Forms ── */
+input[type="text"] {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius);
+  font-size: 15px;
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+input[type="text"]:focus {
+  border-color: var(--blue);
+}
+
+input[type="text"]::placeholder {
+  color: var(--gray-400);
+}
+
+/* ── Buttons ── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 20px;
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: var(--radius);
+  border: none;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.btn-primary {
+  background: var(--blue);
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background: var(--blue-hover);
+}
+
+.btn-secondary {
+  background: none;
+  color: var(--blue);
+  padding: 8px 0;
+}
+
+.btn-secondary:hover {
+  text-decoration: underline;
+}
+
+/* ── New poll form ── */
+.new-poll-form {
+  margin-top: 8px;
+}
+
+.new-poll-form label {
+  display: block;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--gray-600);
+  margin-bottom: 4px;
+}
+
+.new-poll-form .field + .field {
+  margin-top: 16px;
+}
+
+#options {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+#options > div {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+#options .remove-btn {
+  background: none;
+  border: none;
+  color: var(--gray-400);
+  cursor: pointer;
+  font-size: 18px;
+  line-height: 1;
+  padding: 0 4px;
+  flex-shrink: 0;
+}
+
+#options .remove-btn:hover {
+  color: var(--gray-900);
+}
+
+.form-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+/* ── Login form ── */
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.signup-cta {
+  display: block;
+  text-align: center;
+  margin-top: 16px;
+  font-size: 14px;
+  color: var(--blue);
+}
+
+.login-error {
+  font-size: 14px;
+  color: #c00;
+  margin-top: 12px;
+}
+
+/* ── Poll view ── */
+.poll h1 {
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin-bottom: 20px;
+}
+
+.poll-options {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.poll-option {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 10px 14px;
+  background: var(--gray-50);
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius);
+  cursor: pointer;
+  overflow: hidden;
+  transition: border-color 0.15s;
+  font-size: 15px;
+  text-align: left;
+}
+
+.poll-option:hover {
+  border-color: var(--blue);
+}
+
+.poll-option .bar {
   position: absolute;
-  z-index: -1;
   top: 0;
   left: 0;
-  background: lightskyblue;
   height: 100%;
-  border-radius: 2em;
+  background: var(--blue-light);
+  border-radius: var(--radius) 0 0 var(--radius);
+  z-index: 0;
+  transition: width 0.3s ease;
 }
 
-.poll button.selected {
-  font-weight: bold;
+.poll-option.selected {
+  border-color: var(--blue);
 }
 
-.poll .selected .vote-bar {
-  background: lightgreen;
+.poll-option.selected .bar {
+  background: var(--blue-bar);
 }
 
-.poll .percentage {
-  font-size: 0.6rem;
+.poll-option .label {
+  position: relative;
+  z-index: 1;
+}
+
+.poll-option.selected .label {
+  font-weight: 600;
+}
+
+.poll-option .pct {
+  position: relative;
+  z-index: 1;
+  font-size: 13px;
+  color: var(--gray-400);
+  flex-shrink: 0;
+  margin-left: 12px;
+}
+
+.poll-meta {
+  margin-top: 12px;
+  font-size: 13px;
+  color: var(--gray-400);
 }

@@ -1,4 +1,3 @@
-import type { Status } from '#/db'
 import { html } from '../lib/view'
 import { shell } from './shell'
 
@@ -8,7 +7,7 @@ type Props = {
 
 export function home(props: Props) {
   return shell({
-    title: 'Home',
+    title: 'Polls',
     content: content(props),
   })
 }
@@ -17,53 +16,50 @@ function content({ profile }: Props) {
   const script = html`<script>
     function addOption() {
       const div = document.createElement('div');
-      div.innerHTML = \`<input type="text" name="options[]" placeholder="..." required>
-        <button type="button" onclick="this.parentElement.remove()">✕</button>\`;
+      div.innerHTML = '<input type="text" name="options[]" placeholder="Option" required>' +
+        '<button type="button" class="remove-btn" onclick="this.parentElement.remove()">&times;</button>';
       document.getElementById('options').appendChild(div);
     }
   </script>`
 
   return html`<div id="root">
-    <div class="error"></div>
     <div id="header">
       <h1>Polls</h1>
       <p>Create a poll in the atmosphere.</p>
     </div>
-    <div class="container">
-      <div class="card">
-        ${profile
+
+    ${profile
       ? html`<form action="/logout" method="post" class="session-form">
-              <div>
-                Hi, <strong>${profile.displayName || 'friend'}</strong>
-              </div>
-              <div>
-                <button type="submit">Log out</button>
-              </div>
-            </form>`
+            <div>Hi, <strong>${profile.displayName || 'friend'}</strong></div>
+            <button type="submit">Log out</button>
+          </form>`
       : html`<div class="session-form">
-              <div><a href="/login">Log in</a> to create a poll or vote!</div>
-            </div>`}
+            <div><a href="/login">Log in</a> to create a poll or vote.</div>
+          </div>`}
+
+    <form class="new-poll-form" action="/new-poll" method="post">
+      <div class="field">
+        <label for="question">Question</label>
+        <input type="text" id="question" name="question" required placeholder="What's the best cuisine in the world?">
       </div>
 
-      <form class="new-poll-form" action="/new-poll" method="post">
-        <label for="question">Question</label><br>
-        <input type="text" id="question" name="question" required placeholder="What's the best cuisine in the world?">
-        <br><br>
-
+      <div class="field">
+        <label>Options</label>
         <div id="options">
           <div>
             <input type="text" name="options[]" placeholder="Italian ofc" required>
           </div>
           <div>
-            <input type="text" name="options[]" placeholder="Nothing else matter" required>
+            <input type="text" name="options[]" placeholder="Nothing else matters" required>
           </div>
         </div>
-        <br>
-        <button type="button" onclick="addOption()">+ Add Option</button>
-        <br><br>
-        <button type="submit">Create Poll</button>
-      </form>
-      ${script}
-    </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary">Create Poll</button>
+        <button type="button" class="btn btn-secondary" onclick="addOption()">+ Add Option</button>
+      </div>
+    </form>
+    ${script}
   </div>`
 }
