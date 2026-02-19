@@ -56,6 +56,14 @@ export function createIngester(db: Database) {
               pollUri: record.poll.uri,
             })
             .onConflict((oc) =>
+              oc.columns(['authorDid', 'pollUri']).doUpdateSet({
+                indexedAt: now.toISOString(),
+                createdAt: record.createdAt,
+                optionIndex: record.optionIndex,
+                pollUri: record.poll.uri,
+              }),
+            )
+            .onConflict((oc) =>
               oc.column('uri').doUpdateSet({
                 indexedAt: now.toISOString(),
                 createdAt: record.createdAt,
